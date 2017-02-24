@@ -31,7 +31,7 @@
 
     <route id="publish-route">
       <from uri="timer:foo?period=5000"/>
-        <process ref=""
+        <process ref="wmqProcessor" />
     </route>
       <!--<setBody>-->
         <!--<constant>hello WMQ</constant>-->
