@@ -48,7 +48,7 @@
   </bean>
 
   <bean id="wMQConfig" class="org.apache.camel.component.jms.JmsConfiguration">
-    <property name="connectionFactory" ref="wMQConnectionFactory" />
+    <property name="connectionFactory" ref="connectionFactory" />
     <property name="transacted" value="false" />
     <property name="maxConcurrentConsumers" value="5" />
     <property name="cacheLevelName" value="CACHE_CONNECTION" />
@@ -61,5 +61,12 @@
     <property name="channel" value="SYSTEM.DEF.SVRCONN" />
     <property name="transportType" value="1" />
   </bean>
+
+    <bean id="connectionFactory"
+          class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">
+        <property name="targetConnectionFactory" ref="wMQConnectionFactory" />
+        <property name="username" value="alice" />
+        <property name="password" value="passw0rd" />
+    </bean>
 
 </beans>
