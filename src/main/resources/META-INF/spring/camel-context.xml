@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+     Copyright 2005-2015 Red Hat, Inc.
+
+     Red Hat licenses this file to you under the Apache License, version
+     2.0 (the "License"); you may not use this file except in compliance
+     with the License.  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+     implied.  See the License for the specific language governing
+     permissions and limitations under the License.
+
+-->
+<!-- Configures the Camel Context-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+
+    <route id="publish-route">
+      <from uri="timer:foo?period=5000"/>
+      <setBody>
+        <constant>hello WMQ</constant>
+      </setBody>
+      <to uri="wmq:queue:hello" />
+    </route>
+
+    <route id="consume-route">
+      <from uri="wmq:queue:hello"/>
+      <log message="${body}" />
+    </route>
+
+  </camelContext>
+
+
+  <bean id="wmq" class="org.apache.camel.component.jms.JmsComponent">
+    <property name="configuration" ref="wMQConfig" />
+  </bean>
+
+  <bean id="wMQConfig" class="org.apache.camel.component.jms.JmsConfiguration">
+    <property name="connectionFactory" ref="wMQConnectionFactory" />
+    <property name="transacted" value="false" />
+    <property name="maxConcurrentConsumers" value="5" />
+    <property name="cacheLevelName" value="CACHE_CONNECTION" />
+  </bean>
+
+  <bean id="wMQConnectionFactory" class="com.ibm.mq.jms.MQConnectionFactory">
+    <property name="hostName" value="mqdev-docker" />
+    <property name="port" value="1414" />
+    <property name="queueManager" value="QM1" />
+    <property name="channel" value="SYSTEM.DEF.SVRCONN" />
+    <property name="transportType" value="1" />
+  </bean>
+
+</beans>
