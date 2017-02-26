@@ -19,7 +19,7 @@ public class WMQProcessor implements Processor {
         cf.setPort(new Integer("1414"));
         cf.setTransportType(WMQConstants.WMQ_CM_CLIENT);
         cf.setQueueManager("QM1");
-        cf.setChannel("SYSTEM.DEF.SVRCONN");
+        cf.setChannel("PASSWORD.SVRCONN");
         String user = "alice";
         String password = "passw0rd";
         cf.setStringProperty(WMQConstants.USERID, user);
