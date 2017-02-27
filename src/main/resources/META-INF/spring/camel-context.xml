@@ -27,7 +27,13 @@
 
     <bean id="wmqProcessor" class="com.nullendpoint.WMQProcessor"/>
 
-  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <bean id="propertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="searchSystemEnvironment" value="true" />
+    </bean>
+
+    <camelContext xmlns="http://camel.apache.org/schema/spring">
 
     <route id="publish-processor-route">
       <from uri="timer:fooone?period=5000"/>
@@ -62,18 +68,18 @@
   </bean>
 
   <bean id="wMQConnectionFactory" class="com.ibm.mq.jms.MQConnectionFactory">
-    <property name="hostName" value="mqdev-docker" />
-    <property name="port" value="1414" />
-    <property name="queueManager" value="QM1" />
-    <property name="channel" value="PASSWORD.SVRCONN" />
+    <property name="hostName" value="${MQ_HOST}" />
+    <property name="port" value="${MQ_PORT}" />
+    <property name="queueManager" value="${MQ_QUEUE_MANAGER}" />
+    <property name="channel" value="${MQ_CHANNEL}" />
     <property name="transportType" value="1" />
   </bean>
 
     <bean id="connectionFactory"
           class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">
         <property name="targetConnectionFactory" ref="wMQConnectionFactory" />
-        <property name="username" value="alice" />
-        <property name="password" value="passw0rd" />
+        <property name="username" value="${MQ_USERNAME}" />
+        <property name="password" value="${MQ_PASSWORD}" />
     </bean>
 
     <!--You need to add an additional property to your connection factory to have it use MQCSP. You wil find the property name in the MQConstants / JMSConstants...-->
