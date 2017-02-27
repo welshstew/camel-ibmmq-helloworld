@@ -25,7 +25,9 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <bean id="wmqProcessor" class="com.nullendpoint.WMQProcessor"/>
+
+    <!--Removed this processor, because we are doing it via the Spring Objects-->
+    <!--<bean id="wmqProcessor" class="com.nullendpoint.WMQProcessor"/>-->
 
     <bean id="propertyPlaceholderConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

@@ -8,6 +8,7 @@ import org.apache.camel.Processor;
 import javax.jms.*;
 
 /**
+ * This class was just used for hard-coded testing
  * Created by swinchester on 24/02/2017.
  */
 public class WMQProcessor implements Processor {
