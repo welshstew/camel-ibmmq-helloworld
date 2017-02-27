@@ -37,11 +37,6 @@
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
 
-    <route id="publish-processor-route">
-      <from uri="timer:fooone?period=5000"/>
-        <process ref="wmqProcessor" />
-    </route>
-
       <route id="publish-spring-route">
           <from uri="timer:footwo?period=10000"/>
       <setBody>
