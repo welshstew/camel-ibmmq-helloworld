@@ -34,3 +34,12 @@ Jolokia: Agent started with URL https://172.17.0.13:8778/jolokia/
 2017-02-27 09:56:16,618 [Consumer[QName]] INFO  consume-route                  - hello WMQ
 2017-02-27 09:56:16,646 [Consumer[QName]] INFO  consume-route                  - hello world
 ```
+
+## Deploy
+
+Example command to deploy the .tar.gz file (to my local/vagrant nexus)
+
+```
+mvn deploy:deploy-file  -DgroupId=com.nullendpoint  -DartifactId=camel-ibmmq-helloworld  -Dversion=1.0  -Dpackaging=.tar.gz  -Dfile=/Users/swinchester/GitHub/camel-ibmmq-helloworld/target/camel-ibmmq-helloworld-1.0-SNAPSHOT-app.tar.gz -DrepositoryId=nexus -Durl=http://10.1.2.4:8081/nexus/content/repositories/releases/
+```
+
