@@ -218,6 +218,19 @@
         <version>1.4.0</version>
         <configuration>
           <mainClass>org.apache.camel.spring.Main</mainClass>
+          <environmentVariables>
+            <MQ_TRUSTSTORE_PATH>/etc/config/hello.jks</MQ_TRUSTSTORE_PATH>
+            <MQ_TRUSTSTORE_PASSWORD>password</MQ_TRUSTSTORE_PASSWORD>
+            <MQ_HOST>localhost</MQ_HOST>
+            <MQ_PORT>1441</MQ_PORT>
+            <MQ_QUEUE_MANAGER>QM1</MQ_QUEUE_MANAGER>
+            <MQ_CHANNEL>CHAN1</MQ_CHANNEL>
+            <MQ_TRANSPORT_TYPE>1</MQ_TRANSPORT_TYPE>
+            <MQ_USERNAME>user</MQ_USERNAME>
+            <MQ_PASSWORD>password</MQ_PASSWORD>
+            <MQ_SSL_CIPHER_SUITE>SSL_RSA_WITH_NULL_SHA</MQ_SSL_CIPHER_SUITE>
+            <MQ_QUEUE>hello.world</MQ_QUEUE>
+          </environmentVariables>
         </configuration>
       </plugin>
     </plugins>
