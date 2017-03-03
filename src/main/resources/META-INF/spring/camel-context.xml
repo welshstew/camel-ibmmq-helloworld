@@ -40,11 +40,11 @@
     <!--</bean>-->
 
 
-    <bean id="systemPrereqs" class="com.nullendpoint.SystemPropertyConfigurer">
-        <constructor-arg index="0" value="${MQ_TRUSTSTORE_PATH}" />
-        <constructor-arg index="1" value="${MQ_TRUSTSTORE_PASSWORD}" />
-        <constructor-arg index="2" value="${MQ_JAVA_SECURITY_PATH}" />
-    </bean>
+    <!--<bean id="systemPrereqs" class="com.nullendpoint.SystemPropertyConfigurer">-->
+        <!--<constructor-arg index="0" value="${MQ_TRUSTSTORE_PATH}" />-->
+        <!--<constructor-arg index="1" value="${MQ_TRUSTSTORE_PASSWORD}" />-->
+        <!--<constructor-arg index="2" value="${MQ_JAVA_SECURITY_PATH}" />-->
+    <!--</bean>-->
 
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
@@ -54,11 +54,11 @@
       <setBody>
         <constant>hello WMQ</constant>
       </setBody>
-      <to uri="wmq:queue:{{env:MQ_QUEUE}}" />
+      <to uri="wmq:queue:test.queue" />
     </route>
 
     <route id="consume-route">
-      <from uri="wmq:queue:{{env:MQ_QUEUE}}"/>
+      <from uri="wmq:queue:test.queue"/>
       <log message="${body}" />
     </route>
 
@@ -70,27 +70,29 @@
   </bean>
 
   <bean id="wMQConfig" class="org.apache.camel.component.jms.JmsConfiguration">
-    <property name="connectionFactory" ref="wMQConnectionFactory" />
+    <property name="connectionFactory" ref="connectionFactory" />
     <property name="transacted" value="false" />
     <property name="maxConcurrentConsumers" value="5" />
     <property name="cacheLevelName" value="CACHE_CONNECTION" />
   </bean>
 
-  <bean id="wMQConnectionFactory" class="com.ibm.mq.jms.MQConnectionFactory" depends-on="systemPrereqs">
-    <property name="hostName" value="${MQ_HOST}" />
-    <property name="port" value="${MQ_PORT}" />
-    <property name="queueManager" value="${MQ_QUEUE_MANAGER}" />
-    <property name="channel" value="${MQ_CHANNEL}" />
-    <property name="transportType" value="${MQ_TRANSPORT_TYPE}" />
-    <property name="SSLCipherSuite" value="${MQ_SSL_CIPHER_SUITE}" />
+    <!--depends-on="systemPrereqs"-->
+
+  <bean id="wMQConnectionFactory" class="com.ibm.mq.jms.MQConnectionFactory">
+    <property name="hostName" value="192.168.0.20" />
+    <property name="port" value="1414" />
+    <property name="queueManager" value="QM1" />
+    <property name="channel" value="SYSTEM.DEF.SVRCONN" />
+    <property name="transportType" value="1" />
+    <!--<property name="SSLCipherSuite" value="${MQ_SSL_CIPHER_SUITE}" />-->
   </bean>
 
-    <!--<bean id="connectionFactory"-->
-          <!--class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">-->
-        <!--<property name="targetConnectionFactory" ref="wMQConnectionFactory" />-->
-        <!--<property name="username" value="${MQ_USERNAME}" />-->
-        <!--<property name="password" value="${MQ_PASSWORD}" />-->
-    <!--</bean>-->
+    <bean id="connectionFactory"
+          class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">
+        <property name="targetConnectionFactory" ref="wMQConnectionFactory" />
+        <property name="username" value="mqm" />
+        <property name="password" value="nopassword" />
+    </bean>
 
     <!--You need to add an additional property to your connection factory to have it use MQCSP. You wil find the property name in the MQConstants / JMSConstants...-->
 
