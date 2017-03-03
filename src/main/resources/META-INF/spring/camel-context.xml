@@ -43,6 +43,7 @@
     <bean id="systemPrereqs" class="com.nullendpoint.SystemPropertyConfigurer">
         <constructor-arg index="0" value="${MQ_TRUSTSTORE_PATH}" />
         <constructor-arg index="1" value="${MQ_TRUSTSTORE_PASSWORD}" />
+        <constructor-arg index="2" value="${MQ_JAVA_SECURITY_PATH}" />
     </bean>
 
 
