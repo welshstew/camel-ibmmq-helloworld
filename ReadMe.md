@@ -1,12 +1,17 @@
 # camel-ibmmq-helloworld
 
-Just a quickstart to attempt to get connectivity with an IBM MQ.  All of this is hardcoded in the src/main/resources/META-INF.spring/camel-context.xml.
+Reconfigured to run as per the 'local' branch
 
 This is made to connect to the IBM MQ docker image as per [https://github.com/welshstew/mqdev-docker](https://github.com/welshstew/mqdev-docker)
 
 ## Run on Openshift
 ```
+# standard run
 oc new-app fis-java-openshift:1.0~https://github.com/welshstew/camel-ibmmq-helloworld -e MQ_HOST=mqdev-docker,MQ_PORT=1414,MQ_CHANNEL=PASSWORD.SVRCONN,MQ_USERNAME=alice,MQ_PASSWORD=passw0rd,MQ_QUEUE_MANAGER=QM1
+
+# no ssl run
+oc new-app fis-java-openshift:1.0~https://github.com/welshstew/camel-ibmmq-helloworld#no-ssl -e MQ_HOST=mqdev-docker,MQ_PORT=1414,MQ_CHANNEL=SYSTEM.DEF.SVRCONN,MQ_USERNAME=mq,MQ_PASSWORD=nopassword,MQ_QUEUE_MANAGER=QM1
+
 ```
 ### Log Output
 
