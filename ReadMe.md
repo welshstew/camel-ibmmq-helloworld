@@ -7,10 +7,12 @@ This is made to connect to the IBM MQ docker image as per [https://github.com/we
 ## Run on Openshift
 ```
 # standard run
-oc new-app fis-java-openshift:1.0~https://github.com/welshstew/camel-ibmmq-helloworld -e MQ_HOST=mqdev-docker,MQ_PORT=1414,MQ_CHANNEL=PASSWORD.SVRCONN,MQ_USERNAME=alice,MQ_PASSWORD=passw0rd,MQ_QUEUE_MANAGER=QM1
+oc new-app fis-java-openshift:1.0~https://github.com/welshstew/camel-ibmmq-helloworld -e MQ_HOST=mqdev-docker,MQ_PORT=1414,MQ_CHANNEL=PASSWORD.SVRCONN,MQ_USERNAME=alice,MQ_PASSWORD=passw0rd,MQ_QUEUE_MANAGER=QM1,MQ_TRANSPORT_TYPE=1
 
 # no ssl run
-oc new-app fis-java-openshift:1.0~https://github.com/welshstew/camel-ibmmq-helloworld#no-ssl -e MQ_HOST=mqdev-docker,MQ_PORT=1414,MQ_CHANNEL=SYSTEM.DEF.SVRCONN,MQ_USERNAME=mq,MQ_PASSWORD=nopassword,MQ_QUEUE_MANAGER=QM1
+oc new-app fis-java-openshift:1.0~https://github.com/welshstew/camel-ibmmq-helloworld -e MQ_HOST=mqdev-docker,MQ_PORT=1414,MQ_CHANNEL=SYSTEM.DEF.SVRCONN,MQ_USERNAME=mq,MQ_PASSWORD=nopassword,MQ_QUEUE_MANAGER=QM1,MQ_TRANSPORT_TYPE=1,MQ_QUEUE=hello.queue
+oc edit bc/camel-ibmmq-helloworld
+# add git: ref: no-ssl
 
 ```
 ### Log Output

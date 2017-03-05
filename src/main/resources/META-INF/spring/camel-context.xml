@@ -70,7 +70,7 @@
   </bean>
 
   <bean id="wMQConfig" class="org.apache.camel.component.jms.JmsConfiguration">
-    <property name="connectionFactory" ref="wMQConnectionFactory" />
+    <property name="connectionFactory" ref="connectionFactory" />
     <property name="transacted" value="false" />
     <property name="maxConcurrentConsumers" value="5" />
     <property name="cacheLevelName" value="CACHE_CONNECTION" />
